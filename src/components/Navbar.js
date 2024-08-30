@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';  // Import Link from react-router-dom
 import logo from '../assets/logo.png'; 
 
 function Navbar() {
@@ -26,41 +27,42 @@ function Navbar() {
               <img src={logo} alt="Logo" className="h-10 w-10" />
             </div>
             <div className="hidden md:flex space-x-4">
-              <a
-                href="#"
+              <Link
+                to="/"
                 className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
               >
                 Home
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/explore-garden"
                 className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
               >
                 Explore Garden
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/ayush-info"
                 className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
               >
                 Ayush Info
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/quizzes"
                 className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
               >
                 Quizzes
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/my-notebook"
                 className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
               >
                 My Notebook
-              </a>
-              
+              </Link>
             </div>
-            <button className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium">
-              Contact Us
-            </button>
+            <Link to="/contact">
+              <button className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium">
+                Contact Us
+              </button>
+            </Link>
             <button
               onClick={toggleNavbar}
               aria-label="toggle navbar"
@@ -113,42 +115,42 @@ function Navbar() {
               </button>
             </div>
             <div className="flex flex-col items-center space-y-4 mt-10">
-              <a
-                href="#"
+              <Link
+                to="/"
                 className="text-gray-900 hover:text-green-600 text-xl"
               >
                 Home
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/explore-garden"
                 className="text-gray-900 hover:text-green-600 text-xl"
               >
                 Explore Garden
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/ayush-info"
                 className="text-gray-900 hover:text-green-600 text-xl"
               >
                 Ayush Info
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/quizzes"
                 className="text-gray-900 hover:text-green-600 text-xl"
               >
                 Quizzes
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/my-notebook"
                 className="text-gray-900 hover:text-green-600 text-xl"
               >
                 My Notebook
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/contact"
                 className="text-gray-900 hover:text-green-600 text-xl"
               >
                 Contact Us
-              </a>
+              </Link>
             </div>
           </div>
         </div>
