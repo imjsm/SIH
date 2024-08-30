@@ -20,7 +20,7 @@ function Initiative() {
           <div className="flex flex-col gap-12">
             {/* Initiative 01 */}
             <h2 className="text-3xl font-bold text-[#1b601f] mb-1">The Initiative</h2>
-            <h2 className="text-3xl font-bold text-[#1b601f]  ">Explore the Healing Power of Nature.</h2>
+            <h2 className="text-5xl font-bold text-black  ">Explore the Healing<br/> Power of Nature.</h2>
             
             <div>
             <p className="text-1xl font-sans text-black mb-12 ">HerbVerse is a groundbreaking virtual platform designed to immerse users in the fascinating world of medicinal plants.</p>
