@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import FeaturedPlants from './components/FeaturedPlants';
 import Initiative from './components/Initiative';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <HeroSection/>
       <FeaturedPlants/>
       <Initiative/>
+      <Footer/>
       
     </div>
   );
