@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
+import logo from '../assets/logo.png'; 
 
 const Footer = () => {        
     return (
-        <section className="py-10 bg-gray-50 sm:pt-16 lg:pt-24">
+        <section className="py-10 bg-[#E8F3DF] sm:pt-16 lg:pt-24">
     <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div className="grid grid-cols-2 md:col-span-3 lg:grid-cols-6 gap-y-16 gap-x-12">
             <div className="col-span-2 md:col-span-3 lg:col-span-2 lg:pr-8">
-                <img className="w-auto h-9" src="https://cdn.rareblocks.xyz/collection/celebration/images/logo.svg" alt="" />
+            <img src={logo} alt="Logo" className="h-35 w-30" />
 
-                <p className="text-base leading-relaxed text-gray-600 mt-7">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
+                <p className="text-base leading-relaxed text-gray-600 mt-7">HerbVerse is an innovative and immersive digital platform designed to explore and educate users about the world of medicinal plants. By leveraging advanced technologies like augmented reality (AR) and virtual reality (VR), HerbVerse offers a unique, interactive experience that allows users to delve deeply into the diverse range of plants used in AYUSH (Ayurveda, Yoga & Naturopathy, Unani, Siddha, and Homeopathy) practices.</p>
 
                 <ul className="flex items-center space-x-3 mt-9">
                     <li>
