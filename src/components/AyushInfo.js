@@ -43,7 +43,7 @@ function AyushInfo() {
             {/* Link to Know More */}
             <div className="mt-8 text-center">
                 <a
-                    href="#"
+                    href="https://ayush.gov.in/"
                     className="text-blue-800 hover:text-green-800 text-lg font-semibold underline"
                 >
                     To know more about Ayush, click here
