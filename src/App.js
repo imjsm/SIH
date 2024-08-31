@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';  // Import your Layout component
-import Home from './components/Home';  // Import other page components
-import AyushInfo from './components/AyushInfo';  // Import the AyushInfo component
+import Layout from './components/Layout';  
+import Home from './components/Home'; 
+import AyushInfo from './components/AyushInfo'; 
 
 function App() {
   return (
