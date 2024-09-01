@@ -1,62 +1,114 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Modal from './Modal'; // Adjust the path as needed
+import pen from '../assets/pen.png'; // Adjust the path as needed
+import bookmarksIcon from '../assets/bookmarks.png'; // Adjust the path as needed
+import Bookmarks from './Bookmarks'; // Import your Bookmarks component
 
 function Notebook() {
   const [notes, setNotes] = useState([]);
+  const [currentNote, setCurrentNote] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [activeView, setActiveView] = useState('notes'); // Manage which view is active
+  const [bookmarkedPlants, setBookmarkedPlants] = useState([]); // Placeholder for bookmarked plants
 
-  const createNote = () => {
-    const title = prompt('Enter the title of your note:');
-    if (!title) return;
+  const navigate = useNavigate();
 
-    const content = prompt('Enter the content of your note:');
-    if (!content) return;
-
-    const newNote = {
-      id: Date.now(),
-      title: title,
-      content: content,
-      date: new Date().toLocaleDateString(),
-    };
-
-    setNotes([...notes, newNote]);
+  const openCreateNoteModal = () => {
+    setCurrentNote(null); // Ensure it's a new note
+    setModalOpen(true);
   };
 
-  const editNote = (id) => {
-    const updatedNotes = notes.map((note) => {
-      if (note.id === id) {
-        const newTitle = prompt('Edit the title of your note:', note.title);
-        const newContent = prompt('Edit the content of your note:', note.content);
-        return { ...note, title: newTitle || note.title, content: newContent || note.content };
-      }
-      return note;
-    });
+  const openEditNoteModal = (note) => {
+    setCurrentNote(note); // Set the current note to edit
+    setModalOpen(true);
+  };
+
+  const handleSave = (note) => {
+    let updatedNotes = [];
+    if (note.id) {
+      updatedNotes = notes.map(n => (n.id === note.id ? note : n));
+    } else {
+      const newNote = { ...note, id: Date.now(), date: new Date().toLocaleDateString() };
+      updatedNotes = [...notes, newNote];
+    }
     setNotes(updatedNotes);
+    localStorage.setItem('notes', JSON.stringify(updatedNotes));
+    setModalOpen(false);
   };
 
   const deleteNote = (id) => {
     if (window.confirm('Are you sure you want to delete this note?')) {
       const updatedNotes = notes.filter((note) => note.id !== id);
       setNotes(updatedNotes);
+      localStorage.setItem('notes', JSON.stringify(updatedNotes));
     }
   };
 
+  const editNote = (id) => {
+    const noteToEdit = notes.find(note => note.id === id);
+    if (noteToEdit) {
+      openEditNoteModal(noteToEdit);
+    }
+  };
+
+  const handleViewBookmarks = () => {
+    setActiveView('bookmarks');
+    // Optionally fetch or update bookmarkedPlants if needed
+  };
+
+  const handleViewNotes = () => {
+    setActiveView('notes');
+  };
+
   return (
-    <div style={styles.container}>
-      <h1 style={styles.header}>Welcome To Your Notebook</h1>
-      <div style={styles.actionButtons}>
-        <button style={styles.button} onClick={createNote}>Create New</button>
-        <button style={styles.button}>Bookmarks</button>
+    <div className="bg-[#E8F3DF] min-h-screen flex flex-col items-center p-8">
+      <h1 className="text-4xl font-bold text-center mb-6" style={{ color: '#375F0F' }}>
+        Welcome To Your Notebook
+      </h1>
+      <div className="flex space-x-4 mb-8">
+        <button
+          className={`flex items-center px-6 py-3 rounded ${activeView === 'notes' ? 'bg-green-600 text-white' : 'bg-green-200 text-gray-600'} hover:bg-green-700`}
+          onClick={handleViewNotes}
+        >
+          <img src={pen} alt="View Notes" className="w-5 h-5 mr-2" />
+          View All Notes
+        </button>
+        <button
+          className={`flex items-center px-6 py-3 rounded ${activeView === 'bookmarks' ? 'bg-blue-600 text-white' : 'bg-blue-200 text-gray-600'} hover:bg-blue-700`}
+          onClick={handleViewBookmarks}
+        >
+          <img src={bookmarksIcon} alt="View Bookmarks" className="w-5 h-5 mr-2" />
+          View Bookmarks
+        </button>
       </div>
-      <div style={styles.notesContainer}>
-        {notes.map((note) => (
-          <div key={note.id} style={styles.noteCard}>
-            <h2>{note.title}</h2>
-            <p>{note.content}</p>
-            <div style={styles.date}>{note.date}</div>
-            <button style={styles.editButton} onClick={() => editNote(note.id)}>✏️</button>
-            <button style={styles.deleteButton} onClick={() => deleteNote(note.id)}>🗑️</button>
+      {activeView === 'notes' ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 w-full max-w-4xl">
+          <div className="flex items-center justify-center h-64 bg-white p-4 shadow-md rounded">
+            <button className="flex flex-col items-center text-gray-500" onClick={openCreateNoteModal}>
+              <img src={pen} alt="Add Note" className="w-12 h-12 mb-2" />
+              <span className="text-xl">+</span>
+              <span className="text-lg mt-2">Add New Note</span>
+            </button>
           </div>
-        ))}
-      </div>
+          {notes.map((note) => (
+            <div key={note.id} className="bg-white p-4 shadow-md rounded">
+              <h2 className="text-xl font-semibold">{note.title}</h2>
+              <p className="mt-2">{note.content}</p>
+              <div className="text-sm text-gray-500 mt-2">{note.date}</div>
+              <div className="mt-4 flex space-x-2">
+                <button className="bg-yellow-400 text-white px-2 py-1 rounded hover:bg-yellow-500" onClick={() => editNote(note.id)}>✏️</button>
+                <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" onClick={() => deleteNote(note.id)}>🗑️</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <Bookmarks bookmarkedPlants={bookmarkedPlants} onViewPlant={(plant) => {/* Handle view plant */}} />
+      )}
+      {modalOpen && (
+        <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} onSave={handleSave} note={currentNote} />
+      )}
     </div>
   );
 }
