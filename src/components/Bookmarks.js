@@ -1,6 +1,6 @@
 // src/components/Bookmarks.js
 import React from 'react';
-import heartIcon from '../assets/heart.png'; 
+import heartIcon from '../assets/heart.png'; // Adjust the path as needed
 
 function Bookmarks({ bookmarkedPlants, onViewPlant }) {
   return (
@@ -12,11 +12,11 @@ function Bookmarks({ bookmarkedPlants, onViewPlant }) {
       ) : (
         bookmarkedPlants.map((plant) => (
           <div key={plant.id} className="relative bg-white p-4 shadow-md rounded">
-            <img src={plant.imageUrl} alt={plant.name} className="w-full h-40 object-cover rounded" />
+            <img src={plant.imageUrl} alt={plant.name} className="w-full h-40 object-cover mb-2 rounded" />
             <div className="absolute top-2 right-2">
               <img src={heartIcon} alt="Bookmarked" className="w-8 h-8" />
             </div>
-            <h2 className="text-xl font-semibold mt-2">{plant.name}</h2>
+            <h2 className="text-xl font-semibold">{plant.name}</h2>
             <button
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
               onClick={() => onViewPlant(plant)}

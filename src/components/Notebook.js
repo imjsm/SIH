@@ -1,69 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import Modal from './Modal';
-import Bookmarks from './Bookmarks';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Modal from './Modal'; // Adjust the path as needed
 import pen from '../assets/pen.png'; // Adjust the path as needed
 import bookmarksIcon from '../assets/bookmarks.png'; // Adjust the path as needed
+import Bookmarks from './Bookmarks'; // Import your Bookmarks component
 
 function Notebook() {
   const [notes, setNotes] = useState([]);
-  const [bookmarkedPlants, setBookmarkedPlants] = useState([]);
-  const [showBookmarks, setShowBookmarks] = useState(false);
-  const [showAllNotes, setShowAllNotes] = useState(false);
   const [currentNote, setCurrentNote] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const [activeButton, setActiveButton] = useState('none'); 
+  const [activeView, setActiveView] = useState('notes'); // Manage which view is active
+  const [bookmarkedPlants, setBookmarkedPlants] = useState([]); // Placeholder for bookmarked plants
 
-  useEffect(() => {
-    const savedBookmarks = JSON.parse(localStorage.getItem('bookmarkedPlants')) || [];
-    setBookmarkedPlants(savedBookmarks);
-  }, []);
+  const navigate = useNavigate();
 
   const openCreateNoteModal = () => {
     setCurrentNote(null); // Ensure it's a new note
     setModalOpen(true);
   };
 
-  const viewAllNotes = () => {
-    setShowAllNotes(true);
-    setShowBookmarks(false);
-    setActiveButton('viewNotes');
-  };
-
-  const toggleView = () => {
-    setShowBookmarks(!showBookmarks);
-    setActiveButton(showBookmarks ? 'none' : 'bookmarks');
-    setShowAllNotes(false);
-  };
-
-  const editNote = (id) => {
-    const note = notes.find(note => note.id === id);
-    setCurrentNote(note);
+  const openEditNoteModal = (note) => {
+    setCurrentNote(note); // Set the current note to edit
     setModalOpen(true);
+  };
+
+  const handleSave = (note) => {
+    let updatedNotes = [];
+    if (note.id) {
+      updatedNotes = notes.map(n => (n.id === note.id ? note : n));
+    } else {
+      const newNote = { ...note, id: Date.now(), date: new Date().toLocaleDateString() };
+      updatedNotes = [...notes, newNote];
+    }
+    setNotes(updatedNotes);
+    localStorage.setItem('notes', JSON.stringify(updatedNotes));
+    setModalOpen(false);
   };
 
   const deleteNote = (id) => {
     if (window.confirm('Are you sure you want to delete this note?')) {
       const updatedNotes = notes.filter((note) => note.id !== id);
       setNotes(updatedNotes);
-      const updatedBookmarks = bookmarkedPlants.filter((note) => note.id !== id);
-      setBookmarkedPlants(updatedBookmarks);
-      localStorage.setItem('bookmarkedPlants', JSON.stringify(updatedBookmarks));
+      localStorage.setItem('notes', JSON.stringify(updatedNotes));
     }
   };
 
-  const handleSave = (note) => {
-    if (note.id) {
-      const updatedNotes = notes.map(n => (n.id === note.id ? note : n));
-      setNotes(updatedNotes);
-    } else {
-      const newNote = { ...note, id: Date.now(), date: new Date().toLocaleDateString() };
-      setNotes([...notes, newNote]);
+  const editNote = (id) => {
+    const noteToEdit = notes.find(note => note.id === id);
+    if (noteToEdit) {
+      openEditNoteModal(noteToEdit);
     }
-    setModalOpen(false);
   };
 
-  const viewPlantDetails = (plant) => {
-    alert(`Viewing details for ${plant.name}`);
+  const handleViewBookmarks = () => {
+    setActiveView('bookmarks');
+    // Optionally fetch or update bookmarkedPlants if needed
+  };
+
+  const handleViewNotes = () => {
+    setActiveView('notes');
   };
 
   return (
@@ -73,55 +68,43 @@ function Notebook() {
       </h1>
       <div className="flex space-x-4 mb-8">
         <button
-          className={`flex items-center px-6 py-3 rounded ${activeButton === 'viewNotes' ? 'bg-green-600 text-white' : 'bg-green-200 text-gray-600'} hover:bg-green-700`}
-          onClick={viewAllNotes}
+          className={`flex items-center px-6 py-3 rounded ${activeView === 'notes' ? 'bg-green-600 text-white' : 'bg-green-200 text-gray-600'} hover:bg-green-700`}
+          onClick={handleViewNotes}
         >
-          <img src={pen} alt="View All Notes" className="w-5 h-5 mr-2" />
+          <img src={pen} alt="View Notes" className="w-5 h-5 mr-2" />
           View All Notes
         </button>
         <button
-          className={`flex items-center px-6 py-3 rounded ${activeButton === 'bookmarks' ? 'bg-blue-600 text-white' : 'bg-blue-200 text-gray-600'} hover:bg-blue-700`}
-          onClick={toggleView}
+          className={`flex items-center px-6 py-3 rounded ${activeView === 'bookmarks' ? 'bg-blue-600 text-white' : 'bg-blue-200 text-gray-600'} hover:bg-blue-700`}
+          onClick={handleViewBookmarks}
         >
           <img src={bookmarksIcon} alt="View Bookmarks" className="w-5 h-5 mr-2" />
           View Bookmarks
         </button>
       </div>
-      {showBookmarks ? (
-        <Bookmarks
-          bookmarkedPlants={bookmarkedPlants}
-          onViewPlant={viewPlantDetails}
-        />
-      ) : showAllNotes ? (
+      {activeView === 'notes' ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 w-full max-w-4xl">
-          {notes.length === 0 ? (
-            <div className="flex items-center justify-center h-64 bg-white p-4 shadow-md rounded">
-              <button className="flex items-center text-3xl text-gray-500" onClick={openCreateNoteModal}>
-                <img src={pen} alt="Add Note" className="w-12 h-12" />
-                <span className="flex items-center">+</span>
-              </button>
-            </div>
-          ) : (
-            notes.map((note) => (
-              <div key={note.id} className="bg-white p-4 shadow-md rounded">
-                <h2 className="text-xl font-semibold">{note.title}</h2>
-                <p className="mt-2">{note.content}</p>
-                <div className="text-sm text-gray-500 mt-2">{note.date}</div>
-                <div className="mt-4 flex space-x-2">
-                  <button className="bg-yellow-400 text-white px-2 py-1 rounded hover:bg-yellow-500" onClick={() => editNote(note.id)}>✏️</button>
-                  <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" onClick={() => deleteNote(note.id)}>🗑️</button>
-                </div>
+          <div className="flex items-center justify-center h-64 bg-white p-4 shadow-md rounded">
+            <button className="flex flex-col items-center text-gray-500" onClick={openCreateNoteModal}>
+              <img src={pen} alt="Add Note" className="w-12 h-12 mb-2" />
+              <span className="text-xl">+</span>
+              <span className="text-lg mt-2">Add New Note</span>
+            </button>
+          </div>
+          {notes.map((note) => (
+            <div key={note.id} className="bg-white p-4 shadow-md rounded">
+              <h2 className="text-xl font-semibold">{note.title}</h2>
+              <p className="mt-2">{note.content}</p>
+              <div className="text-sm text-gray-500 mt-2">{note.date}</div>
+              <div className="mt-4 flex space-x-2">
+                <button className="bg-yellow-400 text-white px-2 py-1 rounded hover:bg-yellow-500" onClick={() => editNote(note.id)}>✏️</button>
+                <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" onClick={() => deleteNote(note.id)}>🗑️</button>
               </div>
-            ))
-          )}
+            </div>
+          ))}
         </div>
       ) : (
-        <div className="flex items-center justify-center h-64 bg-white p-4 shadow-md rounded">
-          <button className="flex items-center text-3xl text-gray-500" onClick={openCreateNoteModal}>
-            <img src={pen} alt="Add Note" className="w-12 h-12" />
-            <span className="flex items-center">+</span>
-          </button>
-        </div>
+        <Bookmarks bookmarkedPlants={bookmarkedPlants} onViewPlant={(plant) => {/* Handle view plant */}} />
       )}
       {modalOpen && (
         <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} onSave={handleSave} note={currentNote} />
