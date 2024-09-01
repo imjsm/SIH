@@ -1,6 +1,7 @@
+import { SignedIn, SignedOut, UserButton, SignInButton, SignUpButton } from '@clerk/clerk-react';
+import { Link } from 'react-router-dom';
+import logo from '../assets/logo.png';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';  
-import logo from '../assets/logo.png'; 
 
 function Navbar() {
   const [navIsOpened, setNavIsOpened] = useState(false);
@@ -58,11 +59,27 @@ function Navbar() {
                 My Notebook
               </Link>
             </div>
-            <Link to="/contact">
-              <button className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium">
-                Contact Us
-              </button>
-            </Link>
+
+            {/* Authentication Buttons */}
+            <SignedIn>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
+            <SignedOut>
+              <div className="flex space-x-2"> {/* Add this wrapper to handle spacing */}
+                <SignInButton mode="modal">
+                  <button className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium">
+                    Sign In
+                  </button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <button className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium">
+                    Sign Up
+                  </button>
+                </SignUpButton>
+              </div>
+            </SignedOut>
+
+
             <button
               onClick={toggleNavbar}
               aria-label="toggle navbar"
@@ -87,71 +104,6 @@ function Navbar() {
                 />
               </svg>
             </button>
-          </div>
-          <div
-            className={`md:hidden fixed inset-0 bg-white shadow-lg z-40 transform ${
-              navIsOpened ? 'translate-x-0' : '-translate-x-full'
-            } transition-transform duration-300 ease-in-out`}
-          >
-            <div className="flex justify-end p-4">
-              <button
-                onClick={closeNavbar}
-                className="text-gray-900 hover:text-green-600"
-              >
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div className="flex flex-col items-center space-y-4 mt-10">
-              <Link
-                to="/"
-                className="text-gray-900 hover:text-green-600 text-xl"
-              >
-                Home
-              </Link>
-              <Link
-                to="/explore-garden"
-                className="text-gray-900 hover:text-green-600 text-xl"
-              >
-                Explore Garden
-              </Link>
-              <Link
-                to="/ayush-info"
-                className="text-gray-900 hover:text-green-600 text-xl"
-              >
-                Ayush Info
-              </Link>
-              <Link
-                to="/quizzes"
-                className="text-gray-900 hover:text-green-600 text-xl"
-              >
-                Quizzes
-              </Link>
-              <Link
-                to="/my-notebook"
-                className="text-gray-900 hover:text-green-600 text-xl"
-              >
-                My Notebook
-              </Link>
-              <Link
-                to="/contact"
-                className="text-gray-900 hover:text-green-600 text-xl"
-              >
-                Contact Us
-              </Link>
-            </div>
           </div>
         </div>
       </nav>
