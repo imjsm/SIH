@@ -13,11 +13,11 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />  
           <Route path="ayush-info" element={<AyushInfo/>} /> 
-<<<<<<< Updated upstream
+{/* <<<<<<< Updated upstream */}
           <Route path="similar-plants" element={<SimilarPlants />} />
-=======
+{/* ======= */}
           <Route path='my-notebook' element={<Notebook/>}/>
->>>>>>> Stashed changes
+{/* >>>>>>> Stashed changes */}
         </Route>
       </Routes>
     </Router>
