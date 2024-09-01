@@ -25,15 +25,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-{/* <<<<<<< HEAD */}
-          <Route index element={<Home />} />  
-          <Route path="ayush-info" element={<AyushInfo/>} /> 
-{/* <<<<<<< Updated upstream */}
-          <Route path="similar-plants" element={<SimilarPlants />} />
-{/* ======= */}
-          <Route path='my-notebook' element={<Notebook/>}/>
-{/* >>>>>>> Stashed changes */}
-{/* ======= */}
           <Route index element={<Home />} />
           <Route path="ayush-info" element={<AyushInfo />} />
           <Route path="my-notebook" element={<Notebook />} />
@@ -41,7 +32,6 @@ function App() {
             path="bookmarks"
             element={<Bookmarks bookmarkedPlants={bookmarkedPlants} onViewPlant={viewPlantDetails} />}
           />
-{/* >>>>>>> 930eaad30efbb1fd61dc01c92c5544aafc8838ad */}
         </Route>
       </Routes>
     </Router>
@@ -49,10 +39,4 @@ function App() {
 }
 
 export default App;
-
-
-
-  
-          
-      
 
