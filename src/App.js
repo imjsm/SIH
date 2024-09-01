@@ -5,19 +5,16 @@ import SimilarPlants from './components/SimilarPlants';
 import Home from './components/Home'; 
 import AyushInfo from './components/AyushInfo'; 
 import Notebook from './components/Notebook';
+
 function App() {
   return (
-  
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />  
-          <Route path="ayush-info" element={<AyushInfo/>} /> 
-<<<<<<< Updated upstream
+          <Route path="ayush-info" element={<AyushInfo />} /> 
           <Route path="similar-plants" element={<SimilarPlants />} />
-=======
-          <Route path='my-notebook' element={<Notebook/>}/>
->>>>>>> Stashed changes
+          <Route path="my-notebook" element={<Notebook />} />
         </Route>
       </Routes>
     </Router>

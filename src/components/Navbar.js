@@ -53,7 +53,7 @@ function Navbar() {
                 Quizzes
               </Link>
               <Link
-                to="/similar-plants"
+                to="/my-notebook"
                 className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
               >
                 My Notebook
