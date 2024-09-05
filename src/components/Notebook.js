@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Modal from './Modal'; // Adjust the path as needed
-import pen from '../assets/pen.png'; // Adjust the path as needed
-import bookmarksIcon from '../assets/bookmarks.png'; // Adjust the path as needed
-import Bookmarks from './Bookmarks'; // Import your Bookmarks component
+import Modal from './Modal'; 
+import pen from '../assets/pen.png'; 
+import bookmarksIcon from '../assets/bookmarks.png'; 
+import Bookmarks from './Bookmarks'; 
 
 function Notebook() {
   const [notes, setNotes] = useState([]);
   const [currentNote, setCurrentNote] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const [activeView, setActiveView] = useState('notes'); // Manage which view is active
-  const [bookmarkedPlants, setBookmarkedPlants] = useState([]); // Placeholder for bookmarked plants
+  const [activeView, setActiveView] = useState('notes'); 
+  const [bookmarkedPlants, setBookmarkedPlants] = useState([]); 
 
   const navigate = useNavigate();
 
   const openCreateNoteModal = () => {
-    setCurrentNote(null); // Ensure it's a new note
+    setCurrentNote(null);
     setModalOpen(true);
   };
 
   const openEditNoteModal = (note) => {
-    setCurrentNote(note); // Set the current note to edit
+    setCurrentNote(note); 
     setModalOpen(true);
   };
 
@@ -54,7 +54,7 @@ function Notebook() {
 
   const handleViewBookmarks = () => {
     setActiveView('bookmarks');
-    // Optionally fetch or update bookmarkedPlants if needed
+    
   };
 
   const handleViewNotes = () => {
