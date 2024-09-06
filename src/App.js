@@ -6,6 +6,7 @@ import AyushInfo from './components/AyushInfo';
 import Notebook from './components/Notebook';
 import Bookmarks from './components/Bookmarks';
 import SimilarPlants from './components/SimilarPlants';
+import Quiz from './components/Quiz';
 
 // Example bookmark data (This should be fetched or managed based on your app logic)
 const exampleBookmarkedPlants = [
@@ -34,6 +35,7 @@ function App() {
             element={<Bookmarks bookmarkedPlants={bookmarkedPlants} onViewPlant={viewPlantDetails} />}
           />
           <Route path="" element={<SimilarPlants/>}/>
+              <Route path="quiz" element={<Quiz/>} />
         </Route>
       </Routes>
     </Router>
