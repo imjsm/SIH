@@ -1,0 +1,11 @@
+Model Information:
+* title:	Green Maple Leaf (low-poly)
+* source:	https://sketchfab.com/3d-models/green-maple-leaf-low-poly-ec506b31daa6436baeca7421252fd714
+* author:	Delandi (https://sketchfab.com/delandi)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Green Maple Leaf (low-poly)" (https://sketchfab.com/3d-models/green-maple-leaf-low-poly-ec506b31daa6436baeca7421252fd714) by Delandi (https://sketchfab.com/delandi) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

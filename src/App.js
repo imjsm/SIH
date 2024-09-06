@@ -7,6 +7,7 @@ import Notebook from './components/Notebook';
 import Bookmarks from './components/Bookmarks';
 import SimilarPlants from './components/SimilarPlants';
 import Quiz from './components/Quiz';
+import ExplorePlants from './components/ExplorePlants';
 
 const exampleBookmarkedPlants = [
   { id: 1, imageUrl: 'path/to/plant1.jpg', name: 'Plant 1' },
@@ -35,6 +36,7 @@ function App() {
           />
           <Route path="similar-plants" element={<SimilarPlants />} />
           <Route path="quiz" element={<Quiz />} />
+          <Route path="explore-plants" element={<ExplorePlants/>}/>
         </Route>
       </Routes>
     </Router>

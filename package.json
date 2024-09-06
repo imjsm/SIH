@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@clerk/clerk-react": "^5.5.0",
+    "@react-three/drei": "^9.112.0",
+    "@react-three/fiber": "^8.17.6",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -11,8 +13,12 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
-    "react-scripts": "^3.0.1",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "^5.0.1",
+    "three": "^0.168.0",
+    "three-stdlib": "^2.32.2",
+    "web-vitals": "^2.1.4",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
