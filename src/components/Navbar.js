@@ -1,6 +1,3 @@
-
-
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
@@ -62,25 +59,15 @@ function Navbar() {
               </Link>
             </div>
 
-            {/* Authentication Buttons */}
-            <SignedIn>
-              <UserButton afterSignOutUrl="/" />
-            </SignedIn>
-            <SignedOut>
-              <div className="flex space-x-2"> {/* Add this wrapper to handle spacing */}
-                <SignInButton mode="modal">
-                  <button className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium">
-                    Sign In
-                  </button>
-                </SignInButton>
-                <SignUpButton mode="modal">
-                  <button className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium">
-                    Sign Up
-                  </button>
-                </SignUpButton>
-              </div>
-            </SignedOut>
-
+            {/* Sign In and Sign Up Buttons */}
+            <div className="flex space-x-2">
+              <button className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium">
+                Sign In
+              </button>
+              <button className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium">
+                Sign Up
+              </button>
+            </div>
 
             <button
               onClick={toggleNavbar}
@@ -114,5 +101,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-
