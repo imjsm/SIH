@@ -1,7 +1,9 @@
-import { SignedIn, SignedOut, UserButton, SignInButton, SignUpButton } from '@clerk/clerk-react';
+
+
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
-import { useState } from 'react';
 
 function Navbar() {
   const [navIsOpened, setNavIsOpened] = useState(false);
@@ -47,10 +49,10 @@ function Navbar() {
                 Ayush Info
               </Link>
               <Link
-                to="/quizzes"
+                to="/quiz"
                 className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
               >
-                Quizzes
+                Quiz
               </Link>
               <Link
                 to="/my-notebook"
@@ -82,7 +84,7 @@ function Navbar() {
 
             <button
               onClick={toggleNavbar}
-              aria-label="toggle navbar"
+              aria-label="toggle navbar"  
               className="md:hidden flex items-center px-3 py-2 rounded-md text-gray-900 hover:text-green-600"
             >
               <svg
@@ -112,3 +114,5 @@ function Navbar() {
 }
 
 export default Navbar;
+
+
