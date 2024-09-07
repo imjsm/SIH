@@ -28,6 +28,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="explore-plant" element={<ExplorePlants/>}/>
           <Route path="ayush-info" element={<AyushInfo />} />
           <Route path="my-notebook" element={<Notebook />} />
           <Route
@@ -36,7 +37,7 @@ function App() {
           />
           <Route path="similar-plants" element={<SimilarPlants />} />
           <Route path="quiz" element={<Quiz />} />
-          <Route path="explore-plants" element={<ExplorePlants/>}/>
+          
         </Route>
       </Routes>
     </Router>
