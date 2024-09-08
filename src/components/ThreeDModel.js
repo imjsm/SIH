@@ -25,7 +25,7 @@ const Model = () => {
   useEffect(() => {
     if (scene) {
         //to increase scale of the plant
-      scene.scale.set(100, 100, 100); 
+      scene.scale.set(150, 150, 150); 
       scene.position.set(0, 0, 0); 
     }
   }, [scene]);

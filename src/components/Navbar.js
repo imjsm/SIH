@@ -40,6 +40,12 @@ function Navbar() {
                 Explore Garden
               </Link>
               <Link
+                to="/"
+                className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                All Plants
+              </Link>
+              <Link
                 to="/ayush-info"
                 className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
               >
