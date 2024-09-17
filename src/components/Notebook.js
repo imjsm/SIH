@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import { getAuth } from "firebase/auth";
+import { collection, getFirestore, limit, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Modal from './Modal'; 
-import pen from '../assets/pen.png'; 
-import bookmarksIcon from '../assets/bookmarks.png'; 
-import Bookmarks from './Bookmarks'; 
+import bookmarksIcon from '../assets/bookmarks.png';
+import pen from '../assets/pen.png';
+import Bookmarks from './Bookmarks';
+import Modal from './Modal';
 
 function Notebook() {
   const [notes, setNotes] = useState([]);
@@ -12,7 +15,38 @@ function Notebook() {
   const [activeView, setActiveView] = useState('notes'); 
   const [bookmarkedPlants, setBookmarkedPlants] = useState([]); 
 
+  const auth = getAuth(); // Initialize auth first
+  const userId = auth.currentUser ? auth.currentUser.uid : null;  // Now you can use auth.currentUser
   const navigate = useNavigate();
+  const db = getFirestore(); // Firestore reference
+  const storage = getStorage(); // Firebase storage reference
+ const fetchLatestNote = () => {
+    if (userId) {
+      const q = query(
+        collection(db, 'notes'),
+        where('userId', '==', userId),
+        orderBy('timestamp', 'desc'),
+        limit(1)
+      );
+  
+      // Listen for real-time updates
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const notesArray = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setNotes(notesArray);
+      });
+  
+      // Clean up listener on component unmount
+      return () => unsubscribe();
+    }
+  };
+  
+  useEffect(() => {
+    fetchLatestNote();
+  }, [userId]);
+
 
   const openCreateNoteModal = () => {
     setCurrentNote(null);
@@ -106,6 +140,7 @@ function Notebook() {
       ) : (
         <Bookmarks bookmarkedPlants={bookmarkedPlants} onViewPlant={(plant) => {/* Handle view plant */}} />
       )}
+      
       {modalOpen && (
         <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} onSave={handleSave} note={currentNote} />
       )}
