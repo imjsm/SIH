@@ -1,18 +1,50 @@
 
-
+import { getAuth } from 'firebase/auth'; // Firebase Authentication
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'; // Firestore functions
+import { ref, uploadString } from 'firebase/storage';
 import React, { useState } from 'react';
-import { plantData } from '../components/plantData'; 
+import { plantData } from '../components/plantData';
 import ThreeDModel from '../components/ThreeDModel';
+import { db, storage } from './firebase';
 
 const PlantInfo = () => {
     const [notes, setNotes] = useState('');
+    const [notes, setNotes] = useState('');
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const userId = user ? user.uid : null;
+
 
     const handleShare = () => {
       
     };
 
     const handleSave = () => {
-       
+         if (userId) {
+            try {
+                // Save the notes to Firestore
+                const docRef = await addDoc(collection(db, "notes"), {
+                    userId: userId,
+                    title: plant.commonName,  // You can add a field for the title if needed
+                    content: notes,
+                    timestamp: serverTimestamp(),
+                });
+
+                // Save notes in Firebase Storage under the user's folder
+                const storageRef = ref(storage, `${userId}/notes/${docRef.id}.txt`);
+                await uploadString(storageRef, notes);
+
+                alert("Notes saved successfully!");
+                setNotes('')
+
+            } catch (error) {
+                console.error("Error saving notes: ", error);
+                alert("Failed to save notes. Please try again.");
+            }
+        } 
+        else {
+            alert("You are not authenticated. Please log in to save notes.");
+        }
     };
 
     const handleDownload = () => {
