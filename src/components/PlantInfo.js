@@ -1,4 +1,3 @@
-
 import { getAuth } from 'firebase/auth'; // Firebase Authentication
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'; // Firestore functions
 import { ref, uploadString } from 'firebase/storage';
@@ -9,18 +8,17 @@ import { db, storage } from './firebase';
 
 const PlantInfo = () => {
     const [notes, setNotes] = useState('');
-    const [notes, setNotes] = useState('');
     const auth = getAuth();
     const user = auth.currentUser;
     const userId = user ? user.uid : null;
 
-
     const handleShare = () => {
-      
+        // Logic for sharing notes
     };
 
-    const handleSave = () => {
-         if (userId) {
+    // Mark the handleSave function as async
+    const handleSave = async () => {
+        if (userId) {
             try {
                 // Save the notes to Firestore
                 const docRef = await addDoc(collection(db, "notes"), {
@@ -35,23 +33,19 @@ const PlantInfo = () => {
                 await uploadString(storageRef, notes);
 
                 alert("Notes saved successfully!");
-                setNotes('')
-
+                setNotes('');
             } catch (error) {
                 console.error("Error saving notes: ", error);
                 alert("Failed to save notes. Please try again.");
             }
-        } 
-        else {
+        } else {
             alert("You are not authenticated. Please log in to save notes.");
         }
     };
 
     const handleDownload = () => {
-        
-        
+        // Logic for downloading notes
     };
-
 
     if (!plantData || plantData.length === 0) {
         return <p>No plant data available.</p>;
@@ -66,14 +60,12 @@ const PlantInfo = () => {
                 <div className="w-full h-[600px] bg-white flex justify-center items-center">
                     <ThreeDModel />
                 </div>
-
             </div>
             {/* Right Panel - Information */}
             <div className="flex-1 p-4 lg:pl-6">
                 <h2 className="text-2xl font-bold mb-2" style={{ color: '#4a7f2f' }}>
                     {plant.commonName}
                 </h2>
-                <br />
                 <p className="text-lg font-semibold" style={{ color: '#4a7f2f' }}>
                     {plant.botanicalName}
                 </p>
@@ -83,14 +75,12 @@ const PlantInfo = () => {
                 <p className="text-lg" style={{ color: '#4a7f2f' }}>
                     {plant.description}
                 </p>
-                <br />
                 <h3 className="text-xl font-semibold" style={{ color: '#4a7f2f' }}>
                     Habitat
                 </h3>
                 <p className="text-lg" style={{ color: '#4a7f2f' }}>
                     {plant.habitat}
                 </p>
-                <br />
                 <h3 className="text-xl font-semibold" style={{ color: '#4a7f2f' }}>
                     Medicinal Uses
                 </h3>
@@ -101,7 +91,6 @@ const PlantInfo = () => {
                         </li>
                     ))}
                 </ul>
-                <br />
                 <h3 className="text-xl font-semibold" style={{ color: '#4a7f2f' }}>
                     Methods of Cultivation
                 </h3>

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import QuizImage from '../assets/image-Photoroom (79) 1.png';
 import Quizimage from '../assets/image-Photoroom (78) 1.png';
 import { Data } from './Data';
+import ProgressBar from './ProgressBar'; 
 
 const Quiz = () => {
   const [data, setData] = useState(Data);
@@ -36,6 +37,8 @@ const Quiz = () => {
 
   return (
     <div className="container bg-[rgb(177,222,146)] w-[1400px] p-8 mt-20 rounded-lg flex-grow h-[700px] mb-8 mx-auto box-border">
+      <ProgressBar current={index} total={data.length} /> 
+
       <div className="quiz">
         <div className="text-center">
           <h1 className="text-green-900 text-3xl font-bold mt-10">Q:{index + 1}</h1>

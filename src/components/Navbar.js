@@ -1,33 +1,34 @@
-
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../assets/logo.png';
+import logo_2 from '../assets/Ministry-of-AYUSH-logo-1-3.jpg';
+import { useTheme } from '../components/ThemeContext'; 
 import { doc, getDoc } from "firebase/firestore"; // Import Firestore functions
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import logo from "../assets/logo.png";
 import { auth, db } from "./firebase"; // Import Firebase auth
 import ModalLogin from "./ModalLogin";
 import ModalRegister from "./ModalRegister";
+
 function Navbar() {
   const [navIsOpened, setNavIsOpened] = useState(false);
   const [isModalOpenIn, setIsModalOpenIn] = useState(false); // State to manage modal visibility
+  const [isModalOpenUp, setIsModalOpenUp] = useState(false);
   const [user, setUser] = useState(null); // State to track user authentication status
   const [photoURL, setPhotoURL] = useState(null); // State to track user's profile picture URL
-  const [isModalOpenUp, setIsModalOpenUp] = useState(false);
 
-   const openModalIn = () => {
+  const { isDarkMode, toggleDarkMode } = useTheme(); // Access dark mode and toggle function
+
+  const openModalIn = () => {
     setIsModalOpenIn(true);
   };
 
-  // Function to close the login modal
   const closeModalIn = () => {
     setIsModalOpenIn(false);
   };
 
-  // Function to open the signup modal
   const openModalUp = () => {
     setIsModalOpenUp(true);
   };
 
-  // Function to close the signup modal
   const closeModalUp = () => {
     setIsModalOpenUp(false);
   };
@@ -40,7 +41,7 @@ function Navbar() {
     setNavIsOpened((navIsOpened) => !navIsOpened);
   };
 
-// Listen for authentication state changes
+  // Listen for authentication state changes
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
       if (currentUser) {
@@ -81,117 +82,50 @@ function Navbar() {
       <div
         aria-hidden={true}
         onClick={closeNavbar}
-        className={`fixed bg-gray-800/40 inset-0 z-30 ${
-          navIsOpened ? "block" : "hidden"
-        }`}
+        className={`fixed bg-gray-800/40 inset-0 z-30 ${navIsOpened ? "block" : "hidden"}`}
       />
-      <nav className="bg-[#E8F3DF] shadow-md w-full">
+      <nav className={`w-full shadow-md ${isDarkMode ? 'bg-gray-900' : 'bg-[#E8F3DF]'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <img src={logo} alt="Logo" className="h-10 w-10" />
+              <img src={logo} alt="Logo" className="h-10 w-10 mr-2" />
+              <img src={logo_2} alt="Logo" className="h-10 w-20" />
             </div>
             <div className="hidden md:flex space-x-4">
-              <Link
-                to="/"
-                className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Home
-              </Link>
-              <Link
-                to="/explore-plant"
-                className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Explore Garden
-              </Link>
-              <Link
-                to="/"
-                className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                All Plants
-              </Link>
-              <Link
-                to="/ayush-info"
-                className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Ayush Info
-              </Link>
-              <Link
-                to="/quiz"
-                className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Quiz
-              </Link>
-              <Link
-                to="/my-notebook"
-                className="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                My Notebook
-              </Link>
+              <Link to="/" className={`px-3 py-2 rounded-md text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900 hover:text-green-600'}`}>Home</Link>
+              <Link to="/explore-plant" className={`px-3 py-2 rounded-md text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900 hover:text-green-600'}`}>Explore Garden</Link>
+              <Link to="/all-plants" className={`px-3 py-2 rounded-md text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900 hover:text-green-600'}`}>All Plants</Link>
+              <Link to="/feedback" className={`px-3 py-2 rounded-md text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900 hover:text-green-600'}`}>Queries</Link>
+              <Link to="/ayush-info" className={`px-3 py-2 rounded-md text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900 hover:text-green-600'}`}>Ayush Info</Link>
+              <Link to="/quiz" className={`px-3 py-2 rounded-md text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900 hover:text-green-600'}`}>Quiz</Link>
+              <Link to="/my-notebook" className={`px-3 py-2 rounded-md text-sm font-medium ${isDarkMode ? 'text-white' : 'text-gray-900 hover:text-green-600'}`}>My Notebook</Link>
             </div>
 
             <div className="flex items-center space-x-2">
-              {/* Check if user is logged in */}
               {user ? (
                 <>
-                  {/* Display user's profile picture and a logout button */}
-                  <img
-                    src={photoURL} // User's profile picture
-                    alt="User"
-                    className="h-9 w-9 rounded-full"
-                    style={{ marginRight: '20px' }} // Add some spacing between photo and button
-                  />
-                  <button
-                    onClick={handleLogout}
-                    className="text-white bg-green-600 hover:bg-red-700 px-4 py-2 rounded-md text-sm font-medium"
-                  >
-                    Logout
-                  </button>
+                  <img src={photoURL} alt="User" className="h-9 w-9 rounded-full" style={{ marginRight: '20px' }} />
+                  <button onClick={handleLogout} className="text-white bg-green-600 hover:bg-red-700 px-4 py-2 rounded-md text-sm font-medium">Logout</button>
                 </>
               ) : (
                 <>
-                  {/* Show Sign In and Sign Up buttons if not logged in */}
-                  <button
-                    onClick={openModalIn}
-                    className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium"
-                  >
-                    Sign In
-                  </button>
-                  <button
-                    onClick={openModalUp}
-                    className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium"
-                  >
-                    Sign Up
-                  </button>
+                  <button onClick={openModalIn} className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium">Sign In</button>
+                  <button onClick={openModalUp} className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium">Sign Up</button>
                 </>
               )}
-              {/* ModalLogin and ModalRegister components */}
               <ModalLogin isOpen={isModalOpenIn} onClose={closeModalIn} />
               <ModalRegister isOpen={isModalOpenUp} onClose={closeModalUp} />
             </div>
 
-            <button
-              onClick={toggleNavbar}
-              aria-label="toggle navbar"
-              className="md:hidden flex items-center px-3 py-2 rounded-md text-gray-900 hover:text-green-600"
-            >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d={
-                    navIsOpened
-                      ? "M6 18L18 6M6 6l12 12"
-                      : "M4 6h16M4 12h16M4 18h16"
-                  }
-                />
+            <div className="hidden md:flex items-center space-x-2">
+              <button onClick={toggleDarkMode} aria-label="Toggle Dark Mode" className={`${isDarkMode ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-900'} hover:bg-gray-300 px-2 py-1 rounded-md text-sm`}>
+                {isDarkMode ? 'L' : 'D'}
+              </button>
+            </div>
+
+            <button onClick={toggleNavbar} aria-label="toggle navbar" className="md:hidden flex items-center px-3 py-2 rounded-md text-gray-900 hover:text-green-600">
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={navIsOpened ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
               </svg>
             </button>
           </div>
