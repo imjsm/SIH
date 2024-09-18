@@ -5,6 +5,7 @@ import { OrbitControls } from 'three-stdlib';
 
 const OrbitControlsComponent = () => {
   const { camera, gl } = useThree();
+  
   useEffect(() => {
     const controls = new OrbitControls(camera, gl.domElement);
     controls.enableDamping = true;
@@ -24,9 +25,9 @@ const Model = () => {
 
   useEffect(() => {
     if (scene) {
-        //to increase scale of the plant
-      scene.scale.set(150, 150, 150); 
-      scene.position.set(0, 0, 0); 
+      // Increase the scale of the plant
+      scene.scale.set(150, 150, 150);
+      scene.position.set(0, 0, 0); // Ensure the model is within the view
     }
   }, [scene]);
 

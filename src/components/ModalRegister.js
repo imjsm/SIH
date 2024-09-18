@@ -5,7 +5,7 @@ function ModalRegister({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white rounded-lg shadow-lg w-11/12 md:w-1/3 p-6">
         
       <div className="flex justify-between items-center mb-4">  
@@ -17,7 +17,7 @@ function ModalRegister({ isOpen, onClose }) {
             &times;
           </button>
         </div>
-        {/* Render the Login component */}
+        {/* Render the Register component */}
         
         <Register /> 
       </div>

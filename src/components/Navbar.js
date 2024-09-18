@@ -3,75 +3,56 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import logo_2 from '../assets/Ministry-of-AYUSH-logo-1-3.jpg';
 import { useTheme } from '../components/ThemeContext'; 
-import { doc, getDoc } from "firebase/firestore"; // Import Firestore functions
-import { auth, db } from "./firebase"; // Import Firebase auth
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "./firebase";
 import ModalLogin from "./ModalLogin";
 import ModalRegister from "./ModalRegister";
 
 function Navbar() {
   const [navIsOpened, setNavIsOpened] = useState(false);
-  const [isModalOpenIn, setIsModalOpenIn] = useState(false); // State to manage modal visibility
+  const [isModalOpenIn, setIsModalOpenIn] = useState(false);
   const [isModalOpenUp, setIsModalOpenUp] = useState(false);
-  const [user, setUser] = useState(null); // State to track user authentication status
-  const [photoURL, setPhotoURL] = useState(null); // State to track user's profile picture URL
+  const [user, setUser] = useState(null);
+  const [photoURL, setPhotoURL] = useState(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const { isDarkMode, toggleDarkMode } = useTheme(); // Access dark mode and toggle function
+  const { isDarkMode, toggleDarkMode } = useTheme();
 
-  const openModalIn = () => {
-    setIsModalOpenIn(true);
-  };
+  const openModalIn = () => setIsModalOpenIn(true);
+  const closeModalIn = () => setIsModalOpenIn(false);
+  const openModalUp = () => setIsModalOpenUp(true);
+  const closeModalUp = () => setIsModalOpenUp(false);
+  const closeNavbar = () => setNavIsOpened(false);
+  const toggleNavbar = () => setNavIsOpened((navIsOpened) => !navIsOpened);
 
-  const closeModalIn = () => {
-    setIsModalOpenIn(false);
-  };
-
-  const openModalUp = () => {
-    setIsModalOpenUp(true);
-  };
-
-  const closeModalUp = () => {
-    setIsModalOpenUp(false);
-  };
-
-  const closeNavbar = () => {
-    setNavIsOpened(false);
-  };
-
-  const toggleNavbar = () => {
-    setNavIsOpened((navIsOpened) => !navIsOpened);
-  };
-
-  // Listen for authentication state changes
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
       if (currentUser) {
-        // User is logged in, fetch the user's profile photo from Firestore
         try {
           const userDoc = await getDoc(doc(db, "users", currentUser.uid));
           if (userDoc.exists()) {
             const userData = userDoc.data();
             setUser(currentUser);
-            setPhotoURL(userData.photo || '../assets/defaultprofile.png'); // Set photo URL from Firestore or default picture
+            setPhotoURL(userData.photo || '../assets/defaultprofile.png');
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
       } else {
-        setUser(null); // No user is logged in
-        setPhotoURL('../assets/defaultprofile.png'); // Set default picture when user is not logged in
+        setUser(null);
+        setPhotoURL('../assets/defaultprofile.png');
       }
     });
 
-    return () => unsubscribe(); // Cleanup listener on component unmount
-  }, []); // Empty dependency array to only run on mount
+    return () => unsubscribe();
+  }, []);
 
-  // Logout function
   const handleLogout = async () => {
     try {
       await auth.signOut();
       setUser(null);
-      setPhotoURL('../assets/defaultprofile.png'); // Reset to default picture on logout
-      window.location.href = "/"; // Redirect to homepage after logout
+      setPhotoURL('../assets/defaultprofile.png');
+      window.location.href = "/";
     } catch (error) {
       console.error("Error logging out:", error.message);
     }
@@ -88,7 +69,7 @@ function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <img src={logo} alt="Logo" className="h-10 w-10 mr-2" />
+              <img src={logo} alt="Logo" className="h-15 w-10 mr-2" />
               <img src={logo_2} alt="Logo" className="h-10 w-20" />
             </div>
             <div className="hidden md:flex space-x-4">
@@ -103,10 +84,46 @@ function Navbar() {
 
             <div className="flex items-center space-x-2">
               {user ? (
-                <>
-                  <img src={photoURL} alt="User" className="h-9 w-9 rounded-full" style={{ marginRight: '20px' }} />
-                  <button onClick={handleLogout} className="text-white bg-green-600 hover:bg-red-700 px-4 py-2 rounded-md text-sm font-medium">Logout</button>
-                </>
+                <div className="relative">
+                  <img
+                    src={photoURL}
+                    alt="User"
+                    className="h-9 w-9 rounded-full cursor-pointer"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    style={{ marginRight: '20px' }}
+                  />
+                  {isDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-30">
+                      <Link
+                        to="/profile"
+                        className="block px-4 py-2 text-gray-900 hover:bg-gray-100"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        View Profile
+                      </Link>
+                      <Link
+                        to="/edit-profile"
+                        className="block px-4 py-2 text-gray-900 hover:bg-gray-100"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        Edit Profile
+                      </Link>
+                      <Link
+                        to="/profile-settings"
+                        className="block px-4 py-2 text-gray-900 hover:bg-gray-100"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        Profile Settings
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="block w-full px-4 py-2 text-gray-900 hover:bg-gray-100 text-left"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
               ) : (
                 <>
                   <button onClick={openModalIn} className="text-white bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md text-sm font-medium">Sign In</button>

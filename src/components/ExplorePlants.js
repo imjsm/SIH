@@ -10,7 +10,7 @@ const ExplorePlant = () => {
         <h1 className="text-2xl text-[#000000] font-bold mb-6">Explore Plants</h1>
         <div className="flex">
           <div className="flex-1 pl-6">
-            <PlantInfo />
+            
           </div>
         </div>
       </main>

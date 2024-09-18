@@ -7,6 +7,7 @@ import { auth, db } from "./firebase"; // Adjust import paths as necessary
 import ModalLogin from "./ModalLogin"; // Adjust import paths as necessary
 
 const defaultpicurl = "https://firebasestorage.googleapis.com/v0/b/herbverse-ae951.appspot.com/o/defaultprofile.png?alt=media&token=918606b2-dea8-4e52-94fe-56a2a92d7a7d";
+
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,7 +40,7 @@ function Register() {
           firstName: fname,
           lastName: lname,
           password: password,
-          photo: defaultpicurl ,                        // Note: Storing passwords in plain text is not recommended; use hashing
+          photo: defaultpicurl, // Note: Storing passwords in plain text is not recommended; use hashing
         });
       }
 
@@ -78,7 +79,7 @@ function Register() {
               </label>
               <input
                 type="text"
-                className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="appearance-none rounded relative block w-full px-3 py-2 border border-green-300 bg-white placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                 placeholder="Enter First Name"
                 value={fname}
                 onChange={(e) => setFname(e.target.value)}
@@ -93,7 +94,7 @@ function Register() {
               </label>
               <input
                 type="text"
-                className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="appearance-none rounded relative block w-full px-3 py-2 border border-blue-300 bg-white placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 placeholder="Enter Last Name"
                 value={lname}
                 onChange={(e) => setLname(e.target.value)}
@@ -107,7 +108,7 @@ function Register() {
               </label>
               <input
                 type="email"
-                className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="appearance-none rounded relative block w-full px-3 py-2 border border-purple-300 bg-white placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
                 placeholder="Enter Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -122,7 +123,7 @@ function Register() {
               </label>
               <input
                 type="password"
-                className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="appearance-none rounded relative block w-full px-3 py-2 border border-red-300 bg-white placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm"
                 placeholder="Enter Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
