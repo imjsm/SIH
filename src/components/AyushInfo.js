@@ -22,7 +22,7 @@ function AyushInfo() {
 
             
             <div className="max-w-7xl mx-auto px-4 mt-12 ">
-                <h2 className="text-2xl font-bold text-[#1f7f29] mb-6 text-center">The five Domains of Ayurveda</h2>
+                <h2 className="text-2xl font-bold text-[#1f7f29] mb-6 text-center">The five Domains of AYUSH</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                     {cardImages.map((image, index) => (
                         <div
@@ -46,7 +46,7 @@ function AyushInfo() {
                     href="https://ayush.gov.in/"
                     className="text-blue-800 hover:text-green-800 text-lg font-semibold underline"
                 >
-                    To know more about Ayush, click here
+                    To know more about Ministry of AYUSH, click here
                 </a>
             </div>
         </div>
