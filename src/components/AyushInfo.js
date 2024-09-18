@@ -8,10 +8,10 @@ import card5 from '../assets/card5.png';
 
 function AyushInfo() {
     const cardImages = [card1, card2, card3, card4, card5];
+    const cardLabels = ["Ayurveda", "Yoga", "Unani", "Siddha", "Homeopathy"];
 
     return (
         <div className="py-20 bg-[#E8F3DF]">
-            
             <div className="max-w-4xl mx-auto px-4">
                 <img
                     src={Ayush}
@@ -20,21 +20,25 @@ function AyushInfo() {
                 />
             </div>
 
-            
-            <div className="max-w-7xl mx-auto px-4 mt-12 ">
+            <div className="max-w-7xl mx-auto px-4 mt-12">
                 <h2 className="text-2xl font-bold text-[#1f7f29] mb-6 text-center">The five Domains of AYUSH</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                     {cardImages.map((image, index) => (
                         <div
                             key={index}
                             className="bg-white rounded-lg shadow-md overflow-hidden"
-                            style={{ width: '200px', height: '250px' }}
+                            style={{ width: '200px', height: '200px' }}
                         >
                             <img
                                 src={image}
                                 alt={`Card ${index + 1}`}
-                                className="w-full  object-cover"
+                                className="w-full h-full object-cover"
+                                style={{ height: '160px' }} // Set a fixed height
                             />
+                            {/* Add corresponding text below each card */}
+                            <div className="text-center mt-2 text-lg font-semibold text-[#1f7f29]">
+                                {cardLabels[index]}
+                            </div>
                         </div>
                     ))}
                 </div>
