@@ -6,7 +6,7 @@ import { Data } from './Data';
 import ProgressBar from './ProgressBar'; 
 
 const Quiz = () => {
-  const [data, setData] = useState(Data);
+  const [data] = useState(Data);
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -14,15 +14,16 @@ const Quiz = () => {
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    if (option === data[index].ans) {
-      setScore(score + 1);
-    }
   };
 
   const next = () => {
+     if (selectedOption && data[index][selectedOption] === data[index].ans) {
+      setScore(score + 1);
+    }
+
     if (index < data.length - 1) {
       setIndex(index + 1);
-      setSelectedOption(null);
+      setSelectedOption(null);  // Reset selected option for the next question
     } else {
       setQuizEnded(true);
     }
