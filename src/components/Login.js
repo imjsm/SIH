@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { auth, db } from "./firebase";
 import ModalLogin from "./ModalLogin";
 import ModalRegister from "./ModalRegister";
-import SignInwithGoogle from "./signInWIthGoogle";
+import SignInwithGoogle from "./SignInWIthGoogle";
 
 // up means sign up (register), in means login
 
